@@ -1,0 +1,36 @@
+.container {
+  border: 1px solid #000;
+  background-color: #F5F5F5;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.rows {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-weight: bold;
+  padding: 20px;
+  border-top: 1px solid #000;
+}

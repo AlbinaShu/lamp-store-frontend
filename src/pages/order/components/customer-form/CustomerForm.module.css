@@ -1,0 +1,30 @@
+.form {
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+input,
+textarea {
+  width: calc(100% - 20px);
+  padding: 10px;
+  border: 1px solid #000;
+}
+
+textarea {
+  min-height: 80px;
+}

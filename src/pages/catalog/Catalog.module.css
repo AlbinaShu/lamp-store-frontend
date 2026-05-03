@@ -1,0 +1,28 @@
+.layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 30px;
+    padding: 20px 40px;
+}
+
+@media (max-width: 850px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: fit-content;
+}
+
+.sidebarTitle {
+    font-size: 20px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
