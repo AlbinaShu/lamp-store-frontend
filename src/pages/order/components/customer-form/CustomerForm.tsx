@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from "./CustomerForm.module.css";
 
-const CustomerForm: React.FC = () => {
+export interface ICustomerFormData {
+    name: string;
+    phone: string;
+    email: string;
+    address: string;
+}
+
+interface ICustomerFormProps {
+    onFormDataChange: (data: ICustomerFormData) => void;
+}
+
+const CustomerForm: React.FC<ICustomerFormProps> = ({ onFormDataChange }) => {
+    const [formData, setFormData] = useState<ICustomerFormData>({
+        name: '',
+        phone: '',
+        email: '',
+        address: '',
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;        
+        const newData = { ...formData, [name]: value };
+
+        setFormData(newData);
+        onFormDataChange(newData);
+    };
+
     return (
         <form className={styles.form}>
             <div className={styles.title}>Данные покупателя</div>
@@ -12,6 +38,8 @@ const CustomerForm: React.FC = () => {
                     <input
                         name="name"
                         placeholder="Иванов Иван"
+                        value={formData.name}
+                        onChange={handleChange}
                     />
                 </label>
 
@@ -20,6 +48,8 @@ const CustomerForm: React.FC = () => {
                     <input
                         name="phone"
                         placeholder="+7(XXX)-XXX-XX-XX"
+                        value={formData.phone}
+                        onChange={handleChange}
                     />
                 </label>
 
@@ -28,6 +58,8 @@ const CustomerForm: React.FC = () => {
                     <input
                         name="email"
                         placeholder="test@example.ru"
+                        value={formData.email}
+                        onChange={handleChange}
                     />
                 </label>
 
@@ -36,6 +68,8 @@ const CustomerForm: React.FC = () => {
                     <textarea
                         name="address"
                         placeholder="Москва, улица Советская"
+                        value={formData.address}
+                        onChange={handleChange}
                     />
                 </label>
             </div>

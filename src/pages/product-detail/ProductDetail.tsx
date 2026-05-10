@@ -1,20 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Button from '../../components/button/Button';
 import styles from './ProductDetail.module.css';
-import { PRODUCTS_MOCK } from '../../mocks/products.mock';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../store/store';
+import type { IProductsState } from '../../store/reducers/productsReducer';
+import type { ThunkDispatch } from 'redux-thunk';
+import { fetchProductById, type ProductActionTypes } from '../../store/actions/productActions';
+import { addToCart, type CartActionTypes } from '../../store/actions/cartActions';
+import type { IProduct } from '../../interfaces/product.interface';
 
 const ProductDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const { currentProduct: product, currentProductLoading: loading } = useSelector<RootState, IProductsState>(state => state.products);
+    const dispatch = useDispatch<ThunkDispatch<RootState, unknown, ProductActionTypes | CartActionTypes>>();
 
-    const product = PRODUCTS_MOCK.find(product => product.id === id);
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchProductById(id));
+        }
+    }, [id]);
 
-    const handleAddToCart = () => { };
+    const handleAddToCart = () => {
+        dispatch(addToCart(product as IProduct));
+    };
 
     const handleGoToCart = () => {
         navigate('/cart');
     };
+
+    if (loading) {
+        return <div>Продукт загружается...</div>;
+    }
 
     if (!product) {
         return <div>Товар не найден</div>;

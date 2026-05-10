@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from "./OrderStatus.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Button from '../../components/button/Button';
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../../store/store';
+import type { ThunkDispatch } from 'redux-thunk';
+import { fetchOrderById, type OrderActionTypes } from '../../store/actions/orderActions';
 
 const OrderStatus: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
+    const dispatch = useDispatch<ThunkDispatch<RootState, unknown, OrderActionTypes>>();
+
+    const { currentOrder: order } = useSelector((state: RootState) => state.order);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(fetchOrderById(id));
+        }
+    }, [id]);
 
     const handleBack = () => {
         navigate('/catalog');
+    }
+
+    if (!order) {
+        return <div>Заказ не найден</div>;
     }
 
     return (
@@ -34,7 +52,7 @@ const OrderStatus: React.FC = () => {
 
                     <div className={styles.row}>
                         <span>Дата:</span>
-                        <span>12.04.2026</span>
+                        <span>{new Date(order.created_at).toLocaleDateString()}</span>
                     </div>
                 </div>
 

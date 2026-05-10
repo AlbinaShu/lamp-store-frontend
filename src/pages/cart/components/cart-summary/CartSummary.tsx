@@ -10,6 +10,7 @@ interface ICartSummaryProps {
 
 const CartSummary: React.FC<ICartSummaryProps> = ({ products }) => {
     const navigate = useNavigate();
+    const totalPrice = products.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
     const handleCreateOrder = () => {
         navigate('/order');
@@ -23,7 +24,7 @@ const CartSummary: React.FC<ICartSummaryProps> = ({ products }) => {
                 <div className={styles.rows}>
                     <div className={styles.row}>
                         <span>Товары</span>
-                        <span>10000 ₽</span>
+                        <span>{totalPrice} ₽</span>
                     </div>
 
                     <div className={styles.row}>
@@ -37,7 +38,7 @@ const CartSummary: React.FC<ICartSummaryProps> = ({ products }) => {
             <div className={styles.total}>
                 <div className={styles.row}>
                     <span>Всего</span>
-                    <span>10000 ₽</span>
+                    <span>{totalPrice} ₽</span>
                 </div>
 
                 <Button text='Оформить заказ' onClick={handleCreateOrder}></Button>
